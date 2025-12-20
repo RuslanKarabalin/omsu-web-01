@@ -1,9 +1,11 @@
-function randomInteger(min, max) {
+export {};
+
+function randomInteger(min: number, max: number): number {
     let rand = min + Math.random() * (max + 1 - min);
     return Math.floor(rand);
 }
 
-const printResult = (num, exp) => {
+const printResult = (num: number, exp: () => void): void => {
     console.log(` #${num}`);
     exp();
     console.log('');
@@ -20,17 +22,18 @@ printResult(1, () => {
 printResult(2, () => {
     let x = randomInteger(-40002, 40002);
     console.log(`Число: ${x}`);
-    let first = x.toString();
-    let last = x.toString();
-    let len = x.toString();
+    let xStr = x.toString();
+    let first: string;
+    let last: number;
+    let len: number;
     if (x < 0) {
-        first = first[1];
+        first = xStr[1];
         last = -1 * (x % 10);
-        len = len.length - 1;
+        len = xStr.length - 1;
     } else {
-        first = first[0];
+        first = xStr[0];
         last = x % 10;
-        len = len.length;
+        len = xStr.length;
     }
     console.log(`Первая цифра: ${first}`);
     console.log(`Последняя цифра: ${last}`);
@@ -90,3 +93,4 @@ printResult(7, () => {
     console.log(`Наибольшее из чисел: ${Math.max(x, y, z)}`);
     console.log(`Наименьшее из чисел: ${Math.min(x, y, z)}`);
 });
+

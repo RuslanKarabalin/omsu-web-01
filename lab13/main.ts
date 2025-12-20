@@ -1,4 +1,20 @@
-const quizQuestions = [
+export {};
+
+interface QuizAnswer {
+    a?: string;
+    b?: string;
+    c?: string;
+    d?: string;
+}
+
+interface QuizQuestion {
+    question: string;
+    answers?: QuizAnswer;
+    correctAnswer: string;
+    inputAnswer?: boolean;
+}
+
+const quizQuestions: QuizQuestion[] = [
     {
         question: "1. Какой тег используется для создания заголовков в HTML?",
         answers: {
@@ -206,21 +222,22 @@ const quizQuestions = [
     }
 ];
 
-function buildQuiz() {
+function buildQuiz(): void {
     const quizContainer = document.getElementById('quiz');
-    const output = [];
+    if (!quizContainer) return;
+    const output: string[] = [];
 
     quizQuestions.forEach((currentQuestion, questionNumber) => {
-        const answers = [];
+        const answers: string[] = [];
 
         if (currentQuestion.inputAnswer) {
             answers.push(`<input type="text" name="question${questionNumber}" placeholder="Введите ваш ответ" />`);
-        } else {
+        } else if (currentQuestion.answers) {
             for (let letter in currentQuestion.answers) {
                 answers.push(
                     `<label>
                         <input type="radio" name="question${questionNumber}" value="${letter}">
-                        ${letter}: ${currentQuestion.answers[letter]}
+                        ${letter}: ${currentQuestion.answers[letter as keyof QuizAnswer]}
                     </label>`
                 );
             }
@@ -235,33 +252,37 @@ function buildQuiz() {
     quizContainer.innerHTML = output.join('');
 }
 
-function showResults() {
+function showResults(): void {
     const answerContainers = document.querySelectorAll('.answers');
     let correctAnswersCount = 0;
 
     quizQuestions.forEach((currentQuestion, questionNumber) => {
-        const answerContainer = answerContainers[questionNumber];
+        const answerContainer = answerContainers[questionNumber] as HTMLElement;
+        if (!answerContainer) return;
         let userAnswer = '';
 
         if (currentQuestion.inputAnswer) {
-            userAnswer = (answerContainer.querySelector('input[type="text"]') || {}).value.trim();
+            const input = answerContainer.querySelector('input[type="text"]') as HTMLInputElement;
+            userAnswer = input ? input.value.trim() : '';
         } else {
-            userAnswer = (answerContainer.querySelector('input[type="radio"]:checked') || {}).value;
+            const radio = answerContainer.querySelector('input[type="radio"]:checked') as HTMLInputElement;
+            userAnswer = radio ? radio.value : '';
         }
 
         if (userAnswer === currentQuestion.correctAnswer) {
             correctAnswersCount++;
-            answerContainers[questionNumber].style.color = 'green';
+            answerContainer.style.color = 'green';
         } else {
-            answerContainers[questionNumber].style.color = 'red';
+            answerContainer.style.color = 'red';
         }
     });
 
     const resultsContainer = document.getElementById('results');
+    if (!resultsContainer) return;
     resultsContainer.innerHTML = `<p>Вы ответили правильно на ${correctAnswersCount} из ${quizQuestions.length} вопросов.</p>`;
 
-    let message;
-    let imgSrc;
+    let message: string;
+    let imgSrc: string;
 
     if (correctAnswersCount >= 17) {
         message = 'Отличный результат!';
@@ -280,4 +301,8 @@ function showResults() {
 
 buildQuiz();
 
-document.getElementById('submit').addEventListener('click', showResults);
+const submitButton = document.getElementById('submit');
+if (submitButton) {
+    submitButton.addEventListener('click', showResults);
+}
+

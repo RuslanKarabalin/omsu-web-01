@@ -1,5 +1,7 @@
-function predict() {
-    const answers = {
+export {};
+
+function predict(): void {
+    const answers: { [key: string]: string[] } = {
         positive: [
             "Да, без сомнений!",
             "Все будет отлично!",
@@ -22,10 +24,12 @@ function predict() {
         ]
     };
 
-    const categories = ['positive', 'neutral', 'negative', 'positive_neutral'];
+    const categories: string[] = ['positive', 'neutral', 'negative', 'positive_neutral'];
     const randomCategory = categories[Math.floor(Math.random() * categories.length)];
 
     const randomAnswer = answers[randomCategory][Math.floor(Math.random() * answers[randomCategory].length)];
 
-    document.getElementById('answer').innerText = randomAnswer;
+    const answerElement = document.getElementById('answer');
+    if (answerElement) answerElement.innerText = randomAnswer;
 }
+

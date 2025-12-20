@@ -1,4 +1,6 @@
-const createCircle = (x, y) => {
+export {};
+
+const createCircle = (x: number, y: number): void => {
     const circle = document.createElement('div');
     circle.classList.add('circle');
     circle.classList.add('red');
@@ -8,10 +10,10 @@ const createCircle = (x, y) => {
     document.body.appendChild(circle);
 }
 
-const handleCircleClick = (circle) => {
-    let clickCount = parseInt(circle.dataset.clickCount);
+const handleCircleClick = (circle: HTMLElement): void => {
+    let clickCount = parseInt(circle.dataset.clickCount || '0');
 
-    circle.dataset.clickCount = ++clickCount;
+    circle.dataset.clickCount = String(++clickCount);
 
     if (clickCount === 1) {
         circle.classList.remove('red');
@@ -31,11 +33,13 @@ const handleCircleClick = (circle) => {
 document.addEventListener("DOMContentLoaded", () => {
     createCircle(100, 100);
 
-    document.addEventListener('click', function (event) {
-        if (event.target.classList.contains('circle')) {
-            handleCircleClick(event.target);
+    document.addEventListener('click', function (event: MouseEvent) {
+        const target = event.target as HTMLElement;
+        if (target.classList.contains('circle')) {
+            handleCircleClick(target);
         } else {
             createCircle(event.clientX - 50, event.clientY - 50);
         }
     });
 });
+

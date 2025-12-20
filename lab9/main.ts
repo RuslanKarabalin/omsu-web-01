@@ -1,10 +1,14 @@
+export {};
+
 const weekDays = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"];
 
-const clockFunction = () => {
-    let timeZoneSelect = document.getElementById("timeZones");
+const clockFunction = (): void => {
+    let timeZoneSelect = document.getElementById("timeZones") as HTMLSelectElement;
+    if (!timeZoneSelect) return;
     let tz = timeZoneSelect.options[timeZoneSelect.selectedIndex].text;
     let clock = document.getElementById("clock");
     let date = document.getElementById("date");
+    if (!clock || !date) return;
     const now = new Date(new Date().toLocaleString("en-US", { timeZone: tz }));
     let hours = addZero(now.getHours());
     let minutes = addZero(now.getMinutes());
@@ -20,9 +24,14 @@ const clockFunction = () => {
     setTimeout(clockFunction, 1000);
 }
 
-const addZero = (i) => {
+const addZero = (i: number): string => {
     if (i < 10) {
-        i = "0" + i
-    };
-    return i;
+        return "0" + i;
+    }
+    return String(i);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    clockFunction();
+});
+
