@@ -5,7 +5,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stopwatch</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html {
+            margin: 0;
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(34, 195, 70);
+            background: linear-gradient(0deg, rgba(34, 195, 70, 1) 0%, rgba(250, 253, 45, 1) 100%);
+            font-family: Arial, sans-serif;
+        }
+
+        .stopwatch {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .time {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            margin-bottom: 20px;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .history {
+            margin-top: 20px;
+        }
+
+        .history ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .history li {
+            background-color: #e0e0e0;
+            margin-bottom: 5px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        button.start {
+            background-color: green;
+            color: white;
+        }
+
+        button.stop {
+            background-color: red;
+            color: white;
+        }
+
+        button.reset {
+            background-color: orange;
+        }
+
+        button.clear-history {
+            background-color: blue;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
